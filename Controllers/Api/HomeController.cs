@@ -23,7 +23,6 @@ namespace la_mia_pizzeria_static.Controllers.Api
         [HttpGet]
         public IActionResult Get() {
             var  menu = _ctx.Pizzas.Include("Category").Include("Ingredients").ToList();
-            //menu.ToJson();
             return Ok(menu);
         }
     }
