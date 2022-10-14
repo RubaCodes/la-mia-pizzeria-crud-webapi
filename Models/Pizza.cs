@@ -1,4 +1,5 @@
 using la_mia_pizzeria_static.Validation;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace la_mia_pizzeria_static.Models
@@ -26,6 +27,7 @@ namespace la_mia_pizzeria_static.Models
         public decimal Price { get; set; }
 
         public int? CategoryId { get; set; } = null;
+        
         public Category? Category { get; set; }
         public List<Ingredient>? Ingredients { get; set; }
     }
