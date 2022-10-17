@@ -21,16 +21,24 @@ namespace la_mia_pizzeria_static.Controllers.Api
 
 
         [HttpGet]
-        public IActionResult Get(string? name) {
+        public IActionResult Get(string? name)
+        {
             List<Pizza> menu;
             if (name != null)
             {
                 menu = _ctx.Pizzas.Where(p => p.Name.ToLower().Contains(name.ToLower())).Include("Category").Include("Ingredients").ToList();
             }
-            else {
+            else
+            {
                 menu = _ctx.Pizzas.Include("Category").Include("Ingredients").ToList();
-            }               
+            }
             return Ok(menu);
+        }
+        [HttpGet("{id}")]
+        public IActionResult Show(int id)
+        {
+            Pizza pizza = _ctx.Pizzas.Include("Category").Include("Ingredients").Where(p => p.PizzaId == id).FirstOrDefault();
+            return Ok(pizza);
         }
     }
 }
