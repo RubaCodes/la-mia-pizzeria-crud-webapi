@@ -14,6 +14,7 @@
 
 <script type="text/javascript">
     let menu;
+    
     const cardPizza = document.querySelector(".row");
     axios.get("api/home/get")
         .then(function (response) {
@@ -24,27 +25,27 @@
                     let ingredienti = '';
                     for (let i = 0; i < pizza.ingredients.length; i++) {
                         console.log(pizza.ingredients[i].title)
-                           ingredienti += `<li>${pizza.ingredients[i].title}</li>`
+                        ingredienti += `<li>${pizza.ingredients[i].title}</li>`
                     }
                     cardPizza.innerHTML +=
-                   `<div class="col-4 py-2" >
-                   <a class="text-decoration-none  text-danger card" >
-                    <div class="card bg-dark bg-gradient text-white border-2  rounded-lg" >
-                        <img class="img-fluid" src = "${pizza.imgPath}" alt = "${pizza.name}" />
-                        <h3 class="py-1 text-danger" > ${pizza.name}</h3>
-                        <span class="py-1" > ${pizza.category.name}</span>
-                        <span class="py-1" > Price : ${pizza.price}$ </span>
-                        <p class="px-2" > Descrizione: <small>${pizza.description}</small></p >
-                         <ul>
-                            ${ingredienti}
-                        </ul>
-                        </div>
-                    </a>
-                    </div>`
+                        `<div class="col-4 py-2" >
+                       <a class="text-decoration-none  text-danger card" >
+                        <div class="card bg-dark bg-gradient text-white border-2  rounded-lg" >
+                            <img class="img-fluid" src = "${pizza.imgPath}" alt = "${pizza.name}" />
+                            <h3 class="py-1 text-danger" > ${pizza.name}</h3>
+                            <span class="py-1" > ${pizza.category.name}</span>
+                            <span class="py-1" > Price : ${pizza.price}$ </span>
+                            <p class="px-2" > Descrizione: <small>${pizza.description}</small></p >
+                             <ul>
+                                ${ingredienti}
+                            </ul>
+                            </div>
+                        </a>
+                        </div>`
                 }
                 )
-            }else{
-                cardPizza.innerHTML= "<h1>listino delle pizze e' attualmente vuoto</h1>"
+            } else {
+                cardPizza.innerHTML = "<h1>listino delle pizze e' attualmente vuoto</h1>"
             }
         })
         .catch(function (error) {
