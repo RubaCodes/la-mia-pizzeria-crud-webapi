@@ -21,7 +21,7 @@
     pizzaSearch.addEventListener("keyup", cerca)
 
     function cerca() {
-        axios.get("api/home/get", {
+        axios.get("/api/home/get", {
             params: {
                 name: pizzaSearch.value
             }
@@ -40,7 +40,7 @@
 
                         cardPizza.innerHTML +=
                             `<div class="col-4 py-2" >
-                               <a class="text-decoration-none text-danger card" >
+                               <a class="text-decoration-none text-danger card" href="Home/Show/${pizza.pizzaId}" >
                                 <div class="card bg-dark bg-gradient text-white border-2  rounded-lg" >
                                     <img class="img-fluid" src = "${pizza.imgPath}" alt = "${pizza.name}" />
                                     <h3 class="py-1 text-danger" > ${pizza.name}</h3>

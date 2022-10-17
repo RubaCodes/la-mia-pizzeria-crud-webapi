@@ -4,32 +4,52 @@
 @model Pizza
 
 <body>
-    <section class="text-center bg-dark  text-white py-5" id="pizza-library">
-        <div class="container">
-            <div class=" display text-white border-2 border rounded border-danger">
+    <section class="text-center bg-dark  text-white py-5" id="pizza-show">
+        <div class="container body">
+            
+        </div>
+    </section>
+</body>
+
+<script type="text/javascript">
+    let path = window.location.toString()
+    let pathArray = path.split("/")
+    let id = pathArray[pathArray.length -1]
+
+    const container = document.querySelector(".container.body")
+    let pizza
+    let ingredients =""
+    axios.get(`/api/home/show/${id}`)
+    .then(res =>{
+        pizza = res.data
+        console.log(res.data)
+        for (let i = 0; i < pizza.ingredients.length; i++) {
+            console.log(pizza.ingredients[i].title)
+            ingredients += `<li>${pizza.ingredients[i].title}</li>`
+        }
+        container.innerHTML = `<div class=" display text-white border-2 border rounded border-danger">
                 <div class="row">
                     <div class="col-4">
-                        <img class="img-fluid" src="@Model.ImgPath" alt="@Model.Name" />
+                        <img class="img-fluid" src="${pizza.imgPath}" alt="${pizza.name}" />
                     </div>
                     <div class="col">         
                         <div class="d-flex justify-content-around align-items-center  py-2">
-                            <h3 class="py-1">@Model.Name</h3>
-                            <span class="py-1">CAtegoria: @Model.Category.Name</span>
-                            <span class="py-1">Price : @Model.Price $</span>
+                            <h3 class="py-1">${pizza.name}</h3>
+                            <span class="py-1">Categoria:${pizza.category.name}</span>
+                            <span class="py-1">Price : ${pizza.price} $</span>
                         </div>
-                        <p class="px-2"> Ingredienti: <small>@Model.Description</small></p>
+                        <p class="px-2"> Ingredienti: <small>${pizza.description}</small></p>
                         <ul>
-                            @foreach (Ingredient item in Model?.Ingredients)
-                            {
-                                <li>@item.Title</li>
-                            }
+                            ${ingredients}
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center align-items-center gap-4">
                 <a href="@Url.Action("Index", "Pizza")" class="btn btn-danger my-3">Home</a>
-            </div>    
-        </div>
-    </section>
-</body>
+            </div> `
+    })
+    .catch(err => {
+        console.log(err)
+    })
+</script>
