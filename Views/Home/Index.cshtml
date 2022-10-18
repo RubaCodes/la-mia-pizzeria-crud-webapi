@@ -4,6 +4,45 @@
 @model List<Pizza>
 
 <body onload="cerca()">
+    <div class="d-flex justify-content-center py-4">
+    <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Contattaci!!
+        </button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Contattaci</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="sendMessage(event)">
+                        <div class="mb-3">
+                            <label for="contact-email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="form-email" required />
+                        </div> 
+                        <div class="mb-3">
+                            <label for="contact-name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="form-name" required />
+                        </div>
+                         <div class="mb-3">
+                            <label for="contact-title" class="form-label">Titolo</label>
+                            <input type="text" class="form-control" id="form-title" required />
+                        </div>
+                         <div class="mb-3">
+                            <label for="contact-text" class="form-label">Testo</label>
+                            <textarea rows="7"  class="form-control" id="form-text" required ></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Invia</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="text-center  " id="pizza-library">
         <div class="container">
             <input class="js-search" type="text" placeholder="Cerca qui la tua pizza" />
@@ -17,7 +56,8 @@
     const cardPizza = document.querySelector(".row");
     const pizzaSearch = document.querySelector(".js-search")
     let menu;
-
+    
+    //axios call for pizzas
     pizzaSearch.addEventListener("keyup", cerca)
 
     function cerca() {
@@ -63,4 +103,19 @@
                 console.log(error);
             })
     }
+    
+    function sendMessage(e){
+       e.preventDefault()
+
+        axios.post("api/message/send",{
+            email : document.querySelector("#form-email").value, 
+            name : document.querySelector("#form-name").value ,
+            title : document.querySelector("#form-title").value,
+            text : document.querySelector("#form-text").value
+        })
+        .then( res => { console.log(res)})
+        .catch( err => {console.log(err)})
+    }
+    //axios post to send a message
+
 </script>
