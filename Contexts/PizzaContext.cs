@@ -12,6 +12,7 @@ namespace la_mia_pizzeria_static.Contexts
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilding)
         {
