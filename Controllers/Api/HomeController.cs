@@ -52,23 +52,23 @@ namespace la_mia_pizzeria_static.Controllers.Api
         }
 
         [HttpPut]
-        public IActionResult Update(int id , Pizza model) {
+        public IActionResult Update(int id, categoryPizzas model) {
 
             
             //prendo la pizza dal bd con i suoi ingredienti
-            Pizza pizza = _ctx.Pizzas.Where(x => x.PizzaId == model.PizzaId).Include("Ingredients").First();
-            if (pizza == null)
-            {
-                return NotFound("La pizza che stai cercando di modificare non esiste");
-            }
+            //Pizza pizza = _ctx.Pizzas.Where(x => x.PizzaId == model.Pizza.PizzaId).Include("Ingredients").First();
+            //if (pizza == null)
+            //{
+            //    return NotFound("La pizza che stai cercando di modificare non esiste");
+            //}
             //fetch nuovi ingredienti dal db
            // model.Pizza.Ingredients = _ctx.Ingredients.Where(x => model.SelectedIngredients.Contains(x.Id)).ToList();
             //riassegnazioni
-            pizza.Name = model.Name;
-            pizza.Description = model.Description;
-            pizza.Price = model.Price;
-            pizza.ImgPath = model.ImgPath;
-            pizza.CategoryId = model.CategoryId;
+            //pizza.Name = model.Pizza.Name;
+            //pizza.Description = model.Pizza.Description;
+            //pizza.Price = model.Pizza.Price;
+            //pizza.ImgPath = model.Pizza.ImgPath;
+            //pizza.CategoryId = model.Pizza.CategoryId;
            // pizza.Ingredients = model.Pizza.Ingredients;
             //_ctx.SaveChanges();
             return Ok();
