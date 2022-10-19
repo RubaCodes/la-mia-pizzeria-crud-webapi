@@ -17,7 +17,9 @@ namespace la_mia_pizzeria_static.Repositories
 
         public void DeletePizza(int id)
         {
-            throw new NotImplementedException();
+            Pizza pizza = _ctx.Pizzas.Find(id);
+            _ctx.Pizzas.Remove(pizza);
+            _ctx.SaveChanges();
         }
 
         public List<Pizza> GetPizzas()
