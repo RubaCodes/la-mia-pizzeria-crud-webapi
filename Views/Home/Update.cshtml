@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Update Page";
+}
+
+<body>
+    <section>
+        <div class="container">
+            <form  method="post" class="text-danger">
+                <div class="mb-3">
+                    <label class="form-label">Nome Pizza</label>
+                    <input type="text" class="form-control" id="form-name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Descrizione</label>
+                    <textarea placeholder="Inserisci qui la descrizione della pizza" class="form-control" id="form-description"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Immagine Pizza</label>
+                    <input type="text" class="form-control"id="form-image" /> 
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Prezzo:</label>
+                    <input type="number" class="form-control" step="any" id="form-price" >
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Categoria:</label>
+                    <select class="form-control" id="form-category">
+                        <options selected disabled> --Seleziona una categoria-- </options>
+                       @*select della categoria*@ 
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ingredienti</label>
+                    <select multiple="multiple" class="form-control" id="form-ingredients" >
+                        @*select della  lista ingrediente*@
+                   </select>
+                </div>
+                <button type="submit" onclick="update(event)"class="btn btn-danger">Modifica Pizza</button>
+            </form>
+        </div>
+    </section>
+</body>
+<script type="text/javascript">
+    let path = window.location.toString()
+    let pathArray = path.split("/")
+    let id = pathArray[pathArray.length -1]
+
+    let pizza
+    let ingredients =""
+    axios.get(`/api/home/ext/${id}`)
+    .then(res =>{
+        res = res.data
+        console.log(res)
+        // precompilo il form
+        document.querySelector("#form-name").value = res.pizza.name
+        document.querySelector("#form-image").value = res.pizza.imgPath 
+        document.querySelector("#form-description").value = res.pizza.description 
+        document.querySelector("#form-price").value = res.pizza.price
+        //ripopolo la lista di categorie
+        res.categories.forEach( e => {
+            document.querySelector("#form-category").innerHTML +=
+            `<option value="${e.categoryId}" >${e.name}</option>`
+        })
+        //ripopolo la lista degli ingredienti
+        res.ingredients.forEach( e => {
+            document.querySelector("#form-ingredients").innerHTML +=
+            `<option value="${e.id}" >${e.title}</option>`
+        })
+
+        })
+    .catch( err => console.log(err))
+
+    function update(e){
+        e.preventDefault()
+        axios.put("/api/home/update", {
+            pizzaId : id,
+            name : document.querySelector("#form-name").value ,
+            imgPath : document.querySelector("#form-image").value ,
+            description : document.querySelector("#form-description").value ,
+            price : document.querySelector("#form-price").value,
+            categoryId : document.querySelector("#form-category").value,
+            ingredients : document.querySelector("#form-ingredients").value
+         })
+         .then(response => {
+          console.log(response);
+         })
+        .catch(error => {
+         console.log(error);
+         });   
+    }
+        
+</script>

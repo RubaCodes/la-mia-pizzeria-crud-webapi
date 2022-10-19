@@ -3,11 +3,10 @@ using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace la_mia_pizzeria_static.Controllers
 {
-    [Authorize]
+    [Authorize()]
     public class PizzaController : Controller
     {
         PizzaContext _pc;

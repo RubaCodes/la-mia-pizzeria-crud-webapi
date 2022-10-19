@@ -36,7 +36,7 @@
                             <label for="contact-text" class="form-label">Testo</label>
                             <textarea rows="7"  class="form-control" id="form-text" required ></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Invia</button>
+                        <button type="submit"  class="btn btn-primary" data-bs-dismiss="modal">Invia</button>
                     </form>
                 </div>
             </div>
@@ -92,6 +92,8 @@
                                     </ul>
                                     </div>
                                 </a>
+                                <a href="home/update/${pizza.pizzaId}" class="btn btn-primary">Modifica Pizza</a>
+                                <button onclick="deletePizza(${pizza.pizzaId})" class="btn btn-danger">Elimina Pizza</button>
                                 </div>`
                     }
                     )
@@ -116,6 +118,11 @@
         .then( res => { console.log(res)})
         .catch( err => {console.log(err)})
     }
-    //axios post to send a message
+    //axios delete to delete a message
+    function deletePizza(i){
+        axios.delete("/api/home/delete/" + i)
+            .then( res => console.log(res.data))
+            .catch( err => console.log(err))
+    }
 
 </script>

@@ -40,5 +40,50 @@ namespace la_mia_pizzeria_static.Controllers.Api
             Pizza pizza = _ctx.Pizzas.Include("Category").Include("Ingredients").Where(p => p.PizzaId == id).FirstOrDefault();
             return Ok(pizza);
         }
+        //get ma di Pizzacategories per l'update
+        [HttpGet("{id}")]
+        public IActionResult Ext(int id)
+        {   
+            categoryPizzas cp = new categoryPizzas();
+            cp.Pizza = _ctx.Pizzas.Include("Category").Include("Ingredients").Where(p => p.PizzaId == id).FirstOrDefault();
+            cp.Categories = _ctx.Categories.ToList();
+            cp.Ingredients = _ctx.Ingredients.ToList();
+            return Ok(cp);
+        }
+
+        [HttpPut]
+        public IActionResult Update(int id , Pizza model) {
+
+            
+            //prendo la pizza dal bd con i suoi ingredienti
+            Pizza pizza = _ctx.Pizzas.Where(x => x.PizzaId == model.PizzaId).Include("Ingredients").First();
+            if (pizza == null)
+            {
+                return NotFound("La pizza che stai cercando di modificare non esiste");
+            }
+            //fetch nuovi ingredienti dal db
+           // model.Pizza.Ingredients = _ctx.Ingredients.Where(x => model.SelectedIngredients.Contains(x.Id)).ToList();
+            //riassegnazioni
+            pizza.Name = model.Name;
+            pizza.Description = model.Description;
+            pizza.Price = model.Price;
+            pizza.ImgPath = model.ImgPath;
+            pizza.CategoryId = model.CategoryId;
+           // pizza.Ingredients = model.Pizza.Ingredients;
+            //_ctx.SaveChanges();
+            return Ok();
+            
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id) {
+            Pizza pizza =_ctx.Pizzas.Find(id);
+            if (pizza == null) {
+                return NotFound("la pizza che stai cercando di eliminare non esite");
+            }
+            _ctx.Pizzas.Remove(pizza);
+            //_ctx.SaveChanges();
+            return Ok("Pizza eliminata correttamente");
+
+        }
     }
 }
