@@ -1,12 +1,18 @@
-﻿using la_mia_pizzeria_static.Models;
+﻿using la_mia_pizzeria_static.Contexts;
+using la_mia_pizzeria_static.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_static.Repositories
 {
     public class DbPizzaRepo : IPizzaRepo
     {
+        PizzaContext _ctx;
+        public DbPizzaRepo(PizzaContext context) {
+            _ctx = context;
+        }
         public void CreatePizza(Pizza pizza, List<Ingredient> ingredients)
         {
-            throw new NotImplementedException();
+
         }
 
         public void DeletePizza(int id)
@@ -16,17 +22,17 @@ namespace la_mia_pizzeria_static.Repositories
 
         public List<Pizza> GetPizzas()
         {
-            throw new NotImplementedException();
+            return _ctx.Pizzas.Include("Category").Include("Ingredients").ToList();
         }
 
         public Pizza GetPizzas(int id)
         {
-            throw new NotImplementedException();
+            return _ctx.Pizzas.Include("Category").Include("Ingredients").Where(p => p.PizzaId == id ).FirstOrDefault();
         }
 
         public List<Pizza> GetPizzasByName(string name)
         {
-            throw new NotImplementedException();
+            return _ctx.Pizzas.Include("Category").Include("Ingredients").Where(p => p.Name == name ).ToList();
         }
 
         public void UpdatePizza(Pizza pizza, List<Ingredient> ingredients)
