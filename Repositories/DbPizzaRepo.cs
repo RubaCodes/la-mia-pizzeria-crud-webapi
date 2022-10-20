@@ -12,6 +12,7 @@ namespace la_mia_pizzeria_static.Repositories
         }
         public void CreatePizza(Pizza pizza, List<Ingredient> ingredients)
         {
+            throw new NotImplementedException();
 
         }
 
